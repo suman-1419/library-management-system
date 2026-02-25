@@ -1,16 +1,24 @@
 import mongoose from 'mongoose'
 
-const UserSchema = new mongoose.Schema({
-    clerkId: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
-    name: { type: String, required: true },
-    profileImage: { type: String, default: '' },
-    role: {
-        type: String,
-        enum: ['admin', 'author', 'user'],
-        required: true,
-    },
-    isActive: { type: Boolean, default: true },
-}, { timestamps: true })
+const MONGODB_URI = process.env.MONGODB_URI as string
 
-export default mongoose.models.User || mongoose.model('User', UserSchema)
+if (!MONGODB_URI) {
+    throw new Error('Please define MONGODB_URI in .env.local')
+}
+
+let cached = (global as any).mongoose || { conn: null, promise: null }
+
+export default async function dbConnect() {
+    if (cached.conn) return cached.conn
+
+    if (!cached.promise) {
+        cached.promise = mongoose.connect(MONGODB_URI, {
+            dbName: 'library_db',
+            bufferCommands: false,
+        })
+    }
+
+    cached.conn = await cached.promise
+        ; (global as any).mongoose = cached
+    return cached.conn
+}

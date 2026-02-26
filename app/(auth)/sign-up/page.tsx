@@ -21,25 +21,18 @@ export default function SignUpPage() {
     }, [])
 
     useEffect(() => {
-        console.log('[SIGNUP] useEffect triggered — isLoaded:', isLoaded, '| isSignedIn:', isSignedIn)
         if (!isLoaded || !isSignedIn || !user) return
-        console.log('[SIGNUP] selectedRole state value:', selectedRole)
 
         const existingRole = user.publicMetadata?.role as string | undefined
-        console.log('[SIGNUP] existingRole from Clerk metadata:', existingRole)
 
         // If role already set, redirect directly without calling set-role
         if (existingRole) {
-            console.log('[SIGNUP] Existing role found — redirecting based on existingRole:', existingRole)
             localStorage.removeItem('pendingRole')
             if (existingRole === 'author') {
-                console.log('[SIGNUP] Redirecting to /author/dashboard')
                 router.replace('/author/dashboard')
             } else if (existingRole === 'admin') {
-                console.log('[SIGNUP] Redirecting to /admin/dashboard')
                 router.replace('/admin/dashboard')
             } else {
-                console.log('[SIGNUP] Redirecting to /user/dashboard')
                 router.replace('/user/dashboard')
             }
             return
@@ -49,7 +42,6 @@ export default function SignUpPage() {
         const assignRole = async () => {
             setIsSettingRole(true)
             try {
-                console.log('[SIGNUP] No existing role — calling /api/set-role with selectedRole:', selectedRole)
                 const res = await fetch('/api/set-role', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -82,7 +74,6 @@ export default function SignUpPage() {
                     router.replace('/user/dashboard')
                 }
             } catch (err) {
-                console.error('[SIGNUP] Error in handleRoleAndRedirect:', err)
                 setIsSettingRole(false)
             }
         }

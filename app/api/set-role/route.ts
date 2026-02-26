@@ -4,7 +4,6 @@ import dbConnect from '@/lib/dbConnect'
 import User from '@/models/User'
 
 export async function POST(req: Request) {
-    console.log('[SET-ROLE] Request received')
     const { userId } = await auth()
 
     if (!userId) {
@@ -12,7 +11,6 @@ export async function POST(req: Request) {
     }
 
     const { role } = await req.json()
-    console.log('[SET-ROLE] Role from request body:', role)
 
     // Only allow user or author — admin is set manually
     if (!['user', 'author'].includes(role)) {
@@ -23,10 +21,8 @@ export async function POST(req: Request) {
 
     // Check if role already exists — never overwrite!
     const clerkUser = await client.users.getUser(userId)
-    console.log('[SET-ROLE] Clerk user publicMetadata:', clerkUser.publicMetadata)
     const existingRole = clerkUser.publicMetadata?.role as string | undefined
     if (existingRole) {
-        console.log('[SET-ROLE] Role already exists:', existingRole, '— returning early')
         return NextResponse.json({ message: 'Role already set', role: existingRole })
     }
 
@@ -34,7 +30,6 @@ export async function POST(req: Request) {
     await client.users.updateUserMetadata(userId, {
         publicMetadata: { role },
     })
-    console.log('[SET-ROLE] Role saved to Clerk successfully:', role)
 
     // Save user to MongoDB
     await dbConnect()
@@ -56,8 +51,6 @@ export async function POST(req: Request) {
             throw dbError
         }
     }
-    console.log('[SET-ROLE] Role saved to MongoDB successfully')
 
-    console.log('[SET-ROLE] Sending response with role:', role)
     return NextResponse.json({ success: true, role })
 }

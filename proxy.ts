@@ -11,18 +11,14 @@ const isAdminRoute = createRouteMatcher(['/admin(.*)'])
 const isAuthorRoute = createRouteMatcher(['/author(.*)'])
 const isUserRoute = createRouteMatcher(['/user(.*)'])
 
+interface SessionClaims {
+    metadata?: { role?: string }
+}
+
 export default clerkMiddleware(async (auth, req) => {
     const { userId, sessionClaims } = await auth()
-    const claims = sessionClaims as any
-    const role = (
-        claims?.metadata?.role ||
-        claims?.public_metadata?.role ||
-        claims?.publicMetadata?.role
-    ) as string | undefined
-
-    console.log('[MIDDLEWARE] userId:', userId, '| role resolved:', role,
-        '| raw metadata:', JSON.stringify(claims?.metadata),
-        '| raw public_metadata:', JSON.stringify(claims?.public_metadata))
+    const claims = sessionClaims as SessionClaims
+    const role = claims?.metadata?.role
 
     // Not logged in → only allow public routes
     if (!userId && !isPublicRoute(req)) {

@@ -9,6 +9,8 @@ export interface IBook extends Document {
     coverImagePublicId: string
     pdfUrl: string
     pdfPublicId: string
+    language: string
+    tags: string[]
     isApproved: boolean
     isPublished: boolean
     averageRating: number
@@ -29,6 +31,8 @@ const BookSchema = new Schema<IBook>(
         coverImagePublicId: { type: String, required: true },
         pdfUrl: { type: String, required: true },
         pdfPublicId: { type: String, required: true },
+        language: { type: String, default: 'English' },
+        tags: [{ type: String }],
         isApproved: { type: Boolean, default: false },
         isPublished: { type: Boolean, default: false },
         averageRating: { type: Number, default: 0, min: 0, max: 5 },

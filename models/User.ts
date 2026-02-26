@@ -1,4 +1,15 @@
-import mongoose from 'mongoose'
+import mongoose, { Document } from 'mongoose'
+
+export interface IUser extends Document {
+    clerkId: string
+    email: string
+    name: string
+    profileImage: string
+    role: 'admin' | 'author' | 'user'
+    isActive: boolean
+    createdAt: Date
+    updatedAt: Date
+}
 
 const UserSchema = new mongoose.Schema({
     clerkId: { type: String, required: true, unique: true },
@@ -13,4 +24,4 @@ const UserSchema = new mongoose.Schema({
     isActive: { type: Boolean, default: true },
 }, { timestamps: true })
 
-export default mongoose.models.User || mongoose.model('User', UserSchema)
+export default mongoose.models.User || mongoose.model<IUser>('User', UserSchema)

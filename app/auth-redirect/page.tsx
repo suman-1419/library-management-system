@@ -17,23 +17,29 @@ export default function AuthRedirectPage() {
     const router = useRouter()
 
     useEffect(() => {
+        console.log('[auth-redirect] isLoaded:', isLoaded, '| isSignedIn:', isSignedIn)
         if (!isLoaded) return
 
         if (!isSignedIn) {
+            console.log('[auth-redirect] Not signed in → redirecting to /sign-in')
             router.replace('/sign-in')
             return
         }
 
         const role = user.publicMetadata?.role as string | undefined
+        console.log('[auth-redirect] userId:', user.id, '| email:', user.primaryEmailAddress?.emailAddress, '| role:', role)
 
         if (role === 'admin') {
+            console.log('[auth-redirect] → /admin/dashboard')
             router.replace('/admin/dashboard')
         } else if (role === 'author') {
+            console.log('[auth-redirect] → /author/dashboard')
             router.replace('/author/dashboard')
         } else if (role === 'user') {
+            console.log('[auth-redirect] → /user/dashboard')
             router.replace('/user/dashboard')
         } else {
-            // No role yet — new user via Google, route them to sign-up to pick a role
+            console.log('[auth-redirect] No role found → /sign-up (new Google user)')
             router.replace('/sign-up')
         }
     }, [isLoaded, isSignedIn, user, router])

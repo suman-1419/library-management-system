@@ -12,12 +12,16 @@ export default function SignInPage() {
         if (!isLoaded || !isSignedIn || !user) return
 
         const role = user.publicMetadata?.role as string | undefined
+        console.log('[sign-in] Already signed in | userId:', user.id, '| role:', role, '| redirecting...')
 
         if (role === 'admin') {
+            console.log('[sign-in] → /admin/dashboard')
             router.replace('/admin/dashboard')
         } else if (role === 'author') {
+            console.log('[sign-in] → /author/dashboard')
             router.replace('/author/dashboard')
         } else {
+            console.log('[sign-in] → /user/dashboard')
             router.replace('/user/dashboard')
         }
     }, [isLoaded, isSignedIn, user, router])

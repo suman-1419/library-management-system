@@ -36,12 +36,15 @@ export default function SignUpPage() {
     }, [])
 
     useEffect(() => {
+        console.log('[sign-up] isLoaded:', isLoaded, '| isSignedIn:', isSignedIn)
         if (!isLoaded || !isSignedIn || !user) return
 
         const role = user.publicMetadata?.role as string | undefined
+        console.log('[sign-up] userId:', user.id, '| email:', user.primaryEmailAddress?.emailAddress, '| existingRole:', role, '| selectedRole:', selectedRole)
 
         // Already has a role → show warning instead of silently redirecting
         if (role) {
+            console.log('[sign-up] Already registered as:', role, '→ showing warning screen')
             localStorage.removeItem('pendingRole')
             setExistingRole(role)
             return
@@ -49,6 +52,7 @@ export default function SignUpPage() {
 
         // Brand-new user — assign the chosen role
         const assignRole = async () => {
+            console.log('[sign-up] New user — calling /api/set-role with role:', selectedRole)
             setIsSettingRole(true)
             try {
                 const res = await fetch('/api/set-role', {
@@ -56,12 +60,17 @@ export default function SignUpPage() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ role: selectedRole }),
                 })
+                console.log('[sign-up] /api/set-role status:', res.status)
                 if (!res.ok) throw new Error('Failed to set role')
                 const data = await res.json()
+                console.log('[sign-up] /api/set-role response:', data)
                 await user.reload()
+                const dest = DASH[data.role] ?? '/user/dashboard'
+                console.log('[sign-up] Role set successfully:', data.role, '→ redirecting to', dest)
                 localStorage.removeItem('pendingRole')
-                router.replace(DASH[data.role] ?? '/user/dashboard')
-            } catch {
+                router.replace(dest)
+            } catch (err) {
+                console.error('[sign-up] Error setting role:', err)
                 setIsSettingRole(false)
             }
         }

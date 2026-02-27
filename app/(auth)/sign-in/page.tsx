@@ -12,25 +12,28 @@ export default function SignInPage() {
         if (!isLoaded || !isSignedIn || !user) return
 
         const role = user.publicMetadata?.role as string | undefined
+        console.log('[sign-in] Already signed in | userId:', user.id, '| role:', role, '| redirecting...')
 
         if (role === 'admin') {
+            console.log('[sign-in] → /admin/dashboard')
             router.replace('/admin/dashboard')
         } else if (role === 'author') {
+            console.log('[sign-in] → /author/dashboard')
             router.replace('/author/dashboard')
         } else {
+            console.log('[sign-in] → /user/dashboard')
             router.replace('/user/dashboard')
         }
     }, [isLoaded, isSignedIn, user, router])
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col items-center justify-center px-4 py-12">
+        <div className="min-h-screen bg-[#FAF8F5] flex flex-col items-center justify-center px-4 py-12">
             {/* Header */}
             <div className="mb-8 text-center">
-                <div className="inline-flex items-center gap-2 mb-3">
-                    <span className="text-3xl">📚</span>
-                    <h1 className="text-2xl font-bold text-white tracking-tight">LibraryMS</h1>
+                <div className="text-2xl font-bold tracking-tighter mb-2">
+                    <span className="text-[#C4956A]">Library</span><span className="text-[#222222]">MS</span>
                 </div>
-                <p className="text-slate-400 text-sm">Welcome back — sign in to continue</p>
+                <p className="text-[#666666] text-sm">Welcome back — sign in to continue</p>
             </div>
 
             {/* Clerk SignIn Component */}
@@ -38,37 +41,35 @@ export default function SignInPage() {
                 <SignIn
                     routing="hash"
                     signUpUrl="/sign-up"
+                    forceRedirectUrl="/auth-redirect"
                     appearance={{
                         elements: {
                             rootBox: 'w-full',
-                            card: 'bg-slate-800/60 backdrop-blur border border-slate-700/60 shadow-2xl rounded-2xl',
-                            headerTitle: 'text-white',
-                            headerSubtitle: 'text-slate-400',
+                            card: 'bg-white shadow-lg border border-gray-100 rounded-2xl',
+                            headerTitle: 'text-[#222222]',
+                            headerSubtitle: 'text-[#666666]',
                             socialButtonsBlockButton:
-                                'bg-slate-700 border border-slate-600 text-slate-200 hover:bg-slate-600 transition-colors',
-                            socialButtonsBlockButtonText: 'text-slate-200 font-medium',
-                            dividerLine: 'bg-slate-700',
-                            dividerText: 'text-slate-500',
-                            formFieldLabel: 'text-slate-300',
+                                'bg-white border border-gray-200 text-[#222222] hover:bg-gray-50 transition-colors',
+                            socialButtonsBlockButtonText: 'text-[#222222] font-medium',
+                            dividerLine: 'bg-gray-200',
+                            dividerText: 'text-[#999]',
+                            formFieldLabel: 'text-[#444]',
                             formFieldInput:
-                                'bg-slate-900/80 border-slate-700 text-white placeholder:text-slate-500 focus:border-amber-500 focus:ring-amber-500/20',
+                                'bg-white border-gray-200 text-[#222222] placeholder:text-[#999] focus:border-[#C4956A] focus:ring-[#C4956A]/20',
                             formButtonPrimary:
-                                'bg-amber-500 hover:bg-amber-400 text-slate-900 font-semibold transition-colors',
-                            footerActionLink: 'text-amber-400 hover:text-amber-300',
-                            identityPreviewText: 'text-slate-300',
-                            identityPreviewEditButton: 'text-amber-400',
+                                'bg-[#C4956A] hover:bg-[#b5835a] text-white font-semibold transition-colors',
+                            footerActionLink: 'text-[#C4956A] hover:text-[#b5835a]',
+                            identityPreviewText: 'text-[#444]',
+                            identityPreviewEditButton: 'text-[#C4956A]',
                         },
                     }}
                 />
             </div>
 
             {/* Sign-up link */}
-            <p className="mt-6 text-sm text-slate-500">
+            <p className="mt-6 text-sm text-[#666666]">
                 Don&apos;t have an account?{' '}
-                <a
-                    href="/sign-up"
-                    className="text-amber-400 hover:text-amber-300 font-medium transition-colors"
-                >
+                <a href="/sign-up" className="text-[#C4956A] hover:text-[#b5835a] font-medium transition-colors">
                     Sign Up
                 </a>
             </p>

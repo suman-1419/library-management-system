@@ -2,14 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import {
-    BarChart,
-    Bar,
-    XAxis,
-    YAxis,
-    Tooltip,
-    ResponsiveContainer,
-    CartesianGrid,
+    BarChart, Bar, XAxis, YAxis, Tooltip,
+    ResponsiveContainer, CartesianGrid,
 } from 'recharts'
+import AdminNav from '@/components/shared/AdminNav'
 
 interface BookStat {
     _id: string
@@ -36,8 +32,8 @@ export default function AdminReportsPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-[#0F172A] flex items-center justify-center">
-                <div className="w-10 h-10 border-4 border-amber-400 border-t-transparent rounded-full animate-spin" />
+            <div className="min-h-screen bg-[#FAF8F5] flex items-center justify-center">
+                <div className="w-10 h-10 border-4 border-[#C4956A] border-t-transparent rounded-full animate-spin" />
             </div>
         )
     }
@@ -53,72 +49,58 @@ export default function AdminReportsPage() {
     }))
 
     const tooltipStyle = {
-        backgroundColor: '#1e293b',
-        border: '1px solid #334155',
-        borderRadius: '8px',
-        color: '#f1f5f9',
+        backgroundColor: '#ffffff',
+        border: '1px solid #f3f4f6',
+        borderRadius: '12px',
+        color: '#222222',
+        boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)',
     }
 
     return (
-        <div className="min-h-screen bg-[#0F172A] text-white p-8">
-            <h1 className="text-2xl font-bold mb-2">📊 Reports & Analytics</h1>
-            <p className="text-slate-400 text-sm mb-10">Visual breakdown of library activity</p>
+        <>
+            <AdminNav />
+            <div className="min-h-screen bg-[#FAF8F5] p-4 sm:p-8">
+                <div className="max-w-7xl mx-auto">
+                    <h1 className="text-xl sm:text-2xl font-bold text-[#222222] mb-2">Reports & Analytics</h1>
+                    <p className="text-[#666666] text-sm mb-8">Visual breakdown of library activity</p>
 
-            <div className="grid lg:grid-cols-2 gap-8">
-                {/* Most Read */}
-                <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
-                    <h2 className="text-base font-semibold text-amber-400 mb-6">🔥 Top Books by Reads</h2>
-                    {readData.length === 0 ? (
-                        <p className="text-slate-500 text-sm text-center py-10">No data yet.</p>
-                    ) : (
-                        <ResponsiveContainer width="100%" height={280}>
-                            <BarChart data={readData} margin={{ top: 5, right: 10, left: 0, bottom: 60 }}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                                <XAxis
-                                    dataKey="name"
-                                    tick={{ fill: '#94a3b8', fontSize: 11 }}
-                                    angle={-35}
-                                    textAnchor="end"
-                                    interval={0}
-                                />
-                                <YAxis tick={{ fill: '#94a3b8', fontSize: 11 }} allowDecimals={false} />
-                                <Tooltip
-                                    contentStyle={tooltipStyle}
-                                    cursor={{ fill: 'rgba(251,191,36,0.08)' }}
-                                />
-                                <Bar dataKey="reads" fill="#f59e0b" radius={[4, 4, 0, 0]} />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    )}
-                </div>
+                    <div className="grid lg:grid-cols-2 gap-6">
+                        <div className="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
+                            <h2 className="text-base font-semibold text-[#C4956A] mb-6">Top Books by Reads</h2>
+                            {readData.length === 0 ? (
+                                <p className="text-[#666666] text-sm text-center py-10">No data yet.</p>
+                            ) : (
+                                <ResponsiveContainer width="100%" height={280}>
+                                    <BarChart data={readData} margin={{ top: 5, right: 10, left: 0, bottom: 60 }}>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                                        <XAxis dataKey="name" tick={{ fill: '#666666', fontSize: 11 }} angle={-35} textAnchor="end" interval={0} />
+                                        <YAxis tick={{ fill: '#666666', fontSize: 11 }} allowDecimals={false} />
+                                        <Tooltip contentStyle={tooltipStyle} cursor={{ fill: 'rgba(196,149,106,0.08)' }} />
+                                        <Bar dataKey="reads" fill="#C4956A" radius={[4, 4, 0, 0]} />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            )}
+                        </div>
 
-                {/* Most Downloaded */}
-                <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
-                    <h2 className="text-base font-semibold text-amber-400 mb-6">⬇️ Top Books by Downloads</h2>
-                    {downloadData.length === 0 ? (
-                        <p className="text-slate-500 text-sm text-center py-10">No data yet.</p>
-                    ) : (
-                        <ResponsiveContainer width="100%" height={280}>
-                            <BarChart data={downloadData} margin={{ top: 5, right: 10, left: 0, bottom: 60 }}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                                <XAxis
-                                    dataKey="name"
-                                    tick={{ fill: '#94a3b8', fontSize: 11 }}
-                                    angle={-35}
-                                    textAnchor="end"
-                                    interval={0}
-                                />
-                                <YAxis tick={{ fill: '#94a3b8', fontSize: 11 }} allowDecimals={false} />
-                                <Tooltip
-                                    contentStyle={tooltipStyle}
-                                    cursor={{ fill: 'rgba(251,191,36,0.08)' }}
-                                />
-                                <Bar dataKey="downloads" fill="#38bdf8" radius={[4, 4, 0, 0]} />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    )}
+                        <div className="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
+                            <h2 className="text-base font-semibold text-[#C4956A] mb-6">Top Books by Downloads</h2>
+                            {downloadData.length === 0 ? (
+                                <p className="text-[#666666] text-sm text-center py-10">No data yet.</p>
+                            ) : (
+                                <ResponsiveContainer width="100%" height={280}>
+                                    <BarChart data={downloadData} margin={{ top: 5, right: 10, left: 0, bottom: 60 }}>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                                        <XAxis dataKey="name" tick={{ fill: '#666666', fontSize: 11 }} angle={-35} textAnchor="end" interval={0} />
+                                        <YAxis tick={{ fill: '#666666', fontSize: 11 }} allowDecimals={false} />
+                                        <Tooltip contentStyle={tooltipStyle} cursor={{ fill: 'rgba(245,158,11,0.08)' }} />
+                                        <Bar dataKey="downloads" fill="#F59E0B" radius={[4, 4, 0, 0]} />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

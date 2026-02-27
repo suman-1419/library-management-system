@@ -1,23 +1,17 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import AuthorNav from '@/components/shared/AuthorNav'
+import UserNav from '@/components/shared/UserNav'
 
 interface RelatedBook { title: string; coverImageUrl: string }
 
 interface NotificationItem {
     _id: string
-    type: 'book_approved' | 'book_rejected' | 'new_review'
+    type: string
     message: string
     isRead: boolean
     relatedBook?: RelatedBook
     createdAt: string
-}
-
-const TYPE_COLOR: Record<NotificationItem['type'], string> = {
-    book_approved: 'border-l-green-500',
-    book_rejected: 'border-l-red-500',
-    new_review: 'border-l-amber-500',
 }
 
 function timeAgo(dateStr: string): string {
@@ -29,23 +23,21 @@ function timeAgo(dateStr: string): string {
     return `${Math.floor(hrs / 24)}d ago`
 }
 
-export default function AuthorNotificationsPage() {
+const TYPE_ICON: Record<string, string> = {
+    book_approved: '✅',
+    book_rejected: '❌',
+    new_review: '⭐',
+}
+
+export default function UserNotificationsPage() {
     const [notifications, setNotifications] = useState<NotificationItem[]>([])
     const [loading, setLoading] = useState(true)
 
-    const fetchNotifications = async () => {
-        const res = await fetch('/api/author/notifications')
-        const data = await res.json()
-        setNotifications(data.notifications ?? [])
-        setLoading(false)
-    }
-
-    useEffect(() => { fetchNotifications() }, [])
-
-    const markRead = async (id: string) => {
-        await fetch(`/api/author/notifications/${id}/read`, { method: 'PATCH' })
-        setNotifications(prev => prev.map(n => n._id === id ? { ...n, isRead: true } : n))
-    }
+    useEffect(() => {
+        fetch('/api/user/notifications')
+            .then(r => r.json())
+            .then(d => { setNotifications(d.notifications ?? []); setLoading(false) })
+    }, [])
 
     const unreadCount = notifications.filter(n => !n.isRead).length
 
@@ -59,7 +51,7 @@ export default function AuthorNotificationsPage() {
 
     return (
         <>
-            <AuthorNav />
+            <UserNav />
             <div className="min-h-screen bg-[#FAF8F5] p-4 sm:p-8">
                 <div className="max-w-2xl mx-auto">
                     <div className="flex items-center gap-3 mb-8">
@@ -76,12 +68,9 @@ export default function AuthorNotificationsPage() {
                     ) : (
                         <div className="space-y-3">
                             {notifications.map(n => (
-                                <button
-                                    key={n._id}
-                                    onClick={() => !n.isRead && markRead(n._id)}
-                                    className={`w-full text-left bg-white rounded-2xl shadow-sm border border-gray-100 border-l-4 ${TYPE_COLOR[n.type]} px-5 py-4 transition-all hover:shadow-md ${n.isRead ? 'opacity-70' : ''}`}
-                                >
-                                    <div className="flex items-start justify-between gap-4">
+                                <div key={n._id} className={`bg-white border border-gray-100 rounded-2xl shadow-sm px-5 py-4 ${n.isRead ? 'opacity-70' : ''}`}>
+                                    <div className="flex items-start gap-4">
+                                        <span className="text-2xl mt-0.5 shrink-0">{TYPE_ICON[n.type] ?? '🔔'}</span>
                                         <div className="flex-1 min-w-0">
                                             <p className="text-sm text-[#222222] leading-snug">{n.message}</p>
                                             {n.relatedBook && (
@@ -90,10 +79,10 @@ export default function AuthorNotificationsPage() {
                                             <p className="text-xs text-[#999] mt-1.5">{timeAgo(n.createdAt)}</p>
                                         </div>
                                         {!n.isRead && (
-                                            <span className="mt-1 w-2.5 h-2.5 rounded-full bg-[#C4956A] shrink-0" />
+                                            <span className="mt-1.5 w-2.5 h-2.5 rounded-full bg-[#C4956A] shrink-0" />
                                         )}
                                     </div>
-                                </button>
+                                </div>
                             ))}
                         </div>
                     )}

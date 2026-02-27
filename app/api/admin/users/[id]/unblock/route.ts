@@ -4,13 +4,14 @@ import User from '@/models/User'
 
 export async function PATCH(
     _req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         await dbConnect()
+        const { id } = await params
 
         const user = await User.findByIdAndUpdate(
-            params.id,
+            id,
             { isActive: true },
             { new: true }
         )

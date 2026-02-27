@@ -5,10 +5,11 @@ import Category from '@/models/Category'
 // PATCH update category
 export async function PATCH(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         await dbConnect()
+        const { id } = await params
 
         const { name, description } = await req.json()
 
@@ -24,7 +25,7 @@ export async function PATCH(
 
         if (description !== undefined) update.description = description
 
-        const category = await Category.findByIdAndUpdate(params.id, update, {
+        const category = await Category.findByIdAndUpdate(id, update, {
             new: true,
         })
 
@@ -47,14 +48,15 @@ export async function PATCH(
 // DELETE category
 export async function DELETE(
     _req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         await dbConnect()
+        const { id } = await params
 
         const { default: Book } = await import('@/models/Book')
 
-        const booksInCategory = await Book.countDocuments({ category: params.id })
+        const booksInCategory = await Book.countDocuments({ category: id })
         if (booksInCategory > 0) {
             return NextResponse.json(
                 { error: 'Cannot delete category with books assigned' },
@@ -62,7 +64,7 @@ export async function DELETE(
             )
         }
 
-        await Category.findByIdAndDelete(params.id)
+        await Category.findByIdAndDelete(id)
 
         return NextResponse.json({ success: true })
     } catch (error) {

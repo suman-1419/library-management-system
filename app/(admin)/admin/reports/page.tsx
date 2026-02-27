@@ -59,9 +59,9 @@ export default function AdminReportsPage() {
     return (
         <>
             <AdminNav />
-            <div className="min-h-screen bg-[#FAF8F5] p-8">
+            <div className="min-h-screen bg-[#FAF8F5] p-4 sm:p-8">
                 <div className="max-w-7xl mx-auto">
-                    <h1 className="text-2xl font-bold text-[#222222] mb-2">Reports & Analytics</h1>
+                    <h1 className="text-xl sm:text-2xl font-bold text-[#222222] mb-2">Reports & Analytics</h1>
                     <p className="text-[#666666] text-sm mb-8">Visual breakdown of library activity</p>
 
                     <div className="grid lg:grid-cols-2 gap-6">

@@ -110,10 +110,19 @@ export default function BookDetailPage() {
     return (
         <>
             <UserNav />
-            <div className="min-h-screen bg-[#FAF8F5] p-8">
-                <div className="max-w-4xl mx-auto">
+            <div className="min-h-screen bg-[#FAF8F5] p-4 sm:p-8">
+                <div className="max-w-5xl mx-auto">
+                    <div className="mb-6">
+                        <button onClick={() => router.back()} className="text-[#666666] hover:text-[#C4956A] text-sm font-medium transition-colors flex items-center gap-1.5 w-fit">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" />
+                            </svg>
+                            Back
+                        </button>
+                    </div>
+
                     {/* Book Header */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-10 mb-8">
                         <div className="flex flex-col sm:flex-row gap-8">
                             <div className="relative w-40 h-56 shrink-0 rounded-xl overflow-hidden bg-gray-100">
                                 <Image src={book.coverImageUrl} alt={book.title} fill className="object-cover" />

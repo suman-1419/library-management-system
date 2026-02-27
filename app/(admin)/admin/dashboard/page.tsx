@@ -91,9 +91,9 @@ export default function AdminDashboard() {
     return (
         <>
             <AdminNav />
-            <div className="min-h-screen bg-[#FAF8F5] p-8">
+            <div className="min-h-screen bg-[#FAF8F5] p-4 sm:p-8">
                 <div className="max-w-7xl mx-auto">
-                    <h1 className="text-2xl font-bold text-[#222222] mb-8">Dashboard</h1>
+                    <h1 className="text-xl sm:text-2xl font-bold text-[#222222] mb-8">Dashboard</h1>
 
                     {/* Stat Cards */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
@@ -105,7 +105,7 @@ export default function AdminDashboard() {
                     {/* Bottom 2-col */}
                     <div className="grid lg:grid-cols-3 gap-6">
                         {/* Pending Approvals */}
-                        <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
                             <div className="px-6 py-4 flex items-center justify-between border-b border-gray-100">
                                 <h2 className="font-bold text-[#222222]">Pending Book Approvals</h2>
                                 <span className="text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 px-3 py-1 rounded-full">
@@ -151,7 +151,7 @@ export default function AdminDashboard() {
                         </div>
 
                         {/* Recent Registrations */}
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
                             <div className="px-6 py-4 border-b border-gray-100">
                                 <h2 className="font-bold text-[#222222]">New Registrations</h2>
                             </div>

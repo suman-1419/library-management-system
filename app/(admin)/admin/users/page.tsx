@@ -45,17 +45,17 @@ export default function AdminUsersPage() {
     return (
         <>
             <AdminNav />
-            <div className="min-h-screen bg-[#FAF8F5] p-8">
+            <div className="min-h-screen bg-[#FAF8F5] p-4 sm:p-8">
                 <div className="max-w-7xl mx-auto">
-                    <h1 className="text-2xl font-bold text-[#222222] mb-6">User Management</h1>
+                    <h1 className="text-xl sm:text-2xl font-bold text-[#222222] mb-6">User Management</h1>
 
                     {/* Filters */}
                     <div className="flex gap-2 mb-6">
                         {ROLE_FILTERS.map(r => (
                             <button key={r} onClick={() => handleFilterChange(r)}
                                 className={`px-5 py-2 rounded-full text-sm font-semibold capitalize transition-colors ${filter === r
-                                        ? 'bg-[#C4956A] text-white shadow-sm'
-                                        : 'bg-white text-[#666666] border border-gray-200 hover:border-[#C4956A] hover:text-[#C4956A]'
+                                    ? 'bg-[#C4956A] text-white shadow-sm'
+                                    : 'bg-white text-[#666666] border border-gray-200 hover:border-[#C4956A] hover:text-[#C4956A]'
                                     }`}
                             >
                                 {r === 'all' ? 'All Users' : r === 'author' ? 'Authors' : 'Readers'}
@@ -68,7 +68,7 @@ export default function AdminUsersPage() {
                             <div className="w-8 h-8 border-4 border-[#C4956A] border-t-transparent rounded-full animate-spin" />
                         </div>
                     ) : (
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
                             <table className="w-full text-sm">
                                 <thead className="bg-gray-50">
                                     <tr>
@@ -84,8 +84,8 @@ export default function AdminUsersPage() {
                                             <td className="px-5 py-4 text-[#666666]">{u.email}</td>
                                             <td className="px-5 py-4">
                                                 <span className={`text-[11px] font-bold uppercase px-2.5 py-1 rounded-full ${u.role === 'admin' ? 'bg-purple-100 text-purple-700'
-                                                        : u.role === 'author' ? 'bg-blue-100 text-blue-700'
-                                                            : 'bg-gray-100 text-gray-600'
+                                                    : u.role === 'author' ? 'bg-blue-100 text-blue-700'
+                                                        : 'bg-gray-100 text-gray-600'
                                                     }`}>{u.role}</span>
                                             </td>
                                             <td className="px-5 py-4">

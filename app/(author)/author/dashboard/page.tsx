@@ -69,7 +69,7 @@ export default function AuthorDashboard() {
     return (
         <>
             <AuthorNav />
-            <div className="min-h-screen bg-[#FAF8F5] p-8">
+            <div className="min-h-screen bg-[#FAF8F5] p-4 sm:p-8">
                 <div className="max-w-7xl mx-auto">
                     {/* Header */}
                     <div className="flex items-center justify-between mb-2">
@@ -99,7 +99,7 @@ export default function AuthorDashboard() {
                     </div>
 
                     {/* Books Table */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
                         <div className="px-6 py-4 flex items-center justify-between border-b border-gray-100">
                             <h2 className="font-bold text-[#222222]">Recently Uploaded Books</h2>
                             <Link href="/author/books/upload" className="text-xs text-[#C4956A] hover:underline font-medium">View All</Link>

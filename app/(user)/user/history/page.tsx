@@ -40,9 +40,9 @@ export default function HistoryPage() {
     return (
         <>
             <UserNav />
-            <div className="min-h-screen bg-[#FAF8F5] p-8">
+            <div className="min-h-screen bg-[#FAF8F5] p-4 sm:p-8">
                 <div className="max-w-4xl mx-auto">
-                    <h1 className="text-2xl font-bold text-[#222222] mb-6">Reading History</h1>
+                    <h1 className="text-xl sm:text-2xl font-bold text-[#222222] mb-6">Reading History</h1>
 
                     {/* Filter Tabs */}
                     <div className="flex gap-2 mb-6">

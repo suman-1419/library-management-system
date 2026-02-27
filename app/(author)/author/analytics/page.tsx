@@ -71,9 +71,9 @@ export default function AuthorAnalyticsPage() {
     return (
         <>
             <AuthorNav />
-            <div className="min-h-screen bg-[#FAF8F5] p-8">
+            <div className="min-h-screen bg-[#FAF8F5] p-4 sm:p-8">
                 <div className="max-w-7xl mx-auto">
-                    <h1 className="text-2xl font-bold text-[#222222] mb-1">Analytics</h1>
+                    <h1 className="text-xl sm:text-2xl font-bold text-[#222222] mb-6">Analytics</h1>
                     <p className="text-[#666666] text-sm mb-8">Performance stats across all your books</p>
 
                     {/* Summary Cards */}
@@ -111,7 +111,7 @@ export default function AuthorAnalyticsPage() {
 
                     {/* Books Table + Star Breakdown */}
                     <div className="grid lg:grid-cols-3 gap-6">
-                        <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
                             <table className="w-full text-sm">
                                 <thead className="bg-gray-50">
                                     <tr>

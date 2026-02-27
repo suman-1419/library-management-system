@@ -67,9 +67,11 @@ export default function BrowsePage() {
     return (
         <>
             <UserNav />
-            <div className="min-h-screen bg-[#FAF8F5] p-8">
+            <div className="min-h-screen bg-[#FAF8F5] p-4 sm:p-8">
                 <div className="max-w-7xl mx-auto">
-                    <h1 className="text-2xl font-bold text-[#222222] mb-6">Explore Books</h1>
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                        <h1 className="text-xl sm:text-2xl font-bold text-[#222222]">Browse Books</h1>
+                    </div>
 
                     {/* Search Bar */}
                     <div className="relative mb-4">

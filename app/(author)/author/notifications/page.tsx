@@ -60,10 +60,10 @@ export default function AuthorNotificationsPage() {
     return (
         <>
             <AuthorNav />
-            <div className="min-h-screen bg-[#FAF8F5] p-8">
+            <div className="min-h-screen bg-[#FAF8F5] p-4 sm:p-8">
                 <div className="max-w-2xl mx-auto">
                     <div className="flex items-center gap-3 mb-8">
-                        <h1 className="text-2xl font-bold text-[#222222]">Notifications</h1>
+                        <h1 className="text-xl sm:text-2xl font-bold text-[#222222]">Notifications</h1>
                         {unreadCount > 0 && (
                             <span className="px-2.5 py-0.5 bg-[#C4956A] text-white text-xs font-bold rounded-full">
                                 {unreadCount} new

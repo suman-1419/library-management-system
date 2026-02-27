@@ -52,9 +52,9 @@ export default function AdminBooksPage() {
     return (
         <>
             <AdminNav />
-            <div className="min-h-screen bg-[#FAF8F5] p-8">
+            <div className="min-h-screen bg-[#FAF8F5] p-4 sm:p-8 overflow-x-hidden">
                 <div className="max-w-7xl mx-auto">
-                    <h1 className="text-2xl font-bold text-[#222222] mb-6">Book Management</h1>
+                    <h1 className="text-xl sm:text-2xl font-bold text-[#222222] mb-6">Book Management</h1>
 
                     {/* Filter tabs */}
                     <div className="flex gap-2 mb-6">
@@ -63,8 +63,8 @@ export default function AdminBooksPage() {
                                 key={t}
                                 onClick={() => handleTabChange(t)}
                                 className={`px-5 py-2 rounded-full text-sm font-semibold capitalize transition-colors ${tab === t
-                                        ? 'bg-[#C4956A] text-white shadow-sm'
-                                        : 'bg-white text-[#666666] border border-gray-200 hover:border-[#C4956A] hover:text-[#C4956A]'
+                                    ? 'bg-[#C4956A] text-white shadow-sm'
+                                    : 'bg-white text-[#666666] border border-gray-200 hover:border-[#C4956A] hover:text-[#C4956A]'
                                     }`}
                             >
                                 {t === 'all' ? 'All Books' : t === 'pending' ? 'Pending' : 'Approved'}
@@ -77,7 +77,7 @@ export default function AdminBooksPage() {
                             <div className="w-8 h-8 border-4 border-[#C4956A] border-t-transparent rounded-full animate-spin" />
                         </div>
                     ) : (
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
                             <table className="w-full text-sm">
                                 <thead className="bg-gray-50">
                                     <tr>
